@@ -1,5 +1,5 @@
 ;; CSV path
-(set path "../../TAQ/EQY_US_ALL_TRADE_20250402")
+(set path "EQY_US_ALL_TRADE_20250402")
 
 ;; Load CSV TAQ
 (println "Loading CSV TAQ...")
@@ -7,7 +7,8 @@
 (println "Time taken: %ms" t1)
 
 ;; 1 query
-(set t2 (timeit (select {from: trade numTrade: (count Symbol) by: Symbol maxPrice: (max TradePrice)})))
+(println "1 query...")
+(set t2 (timeit (select {from: trade numTrade: (count Symbol) by: Symbol maxPrice: (max (resolve (as 'symbol "Trade Price")))})))
 (println "Time taken: %ms" t2)
 
 ;; exit
