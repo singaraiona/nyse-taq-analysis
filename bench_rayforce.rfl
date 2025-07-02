@@ -1,0 +1,14 @@
+;; CSV path
+(set path "../../TAQ/EQY_US_ALL_TRADE_20250402")
+
+;; Load CSV TAQ
+(println "Loading CSV TAQ...")
+(set t1 (timeit (set trade (read-csv [I64 Symbol Symbol Symbol I64 F64 Symbol U8 I32] path '|'))))
+(println "Time taken: %ms" t1)
+
+;; 1 query
+(set t2 (timeit (select {from: trade numTrade: (count Symbol) by: Symbol maxPrice: (max TradePrice)})))
+(println "Time taken: %ms" t2)
+
+;; exit
+(system "exit 0")
